@@ -1,0 +1,126 @@
+/*************************************************
+** 功能 : Graduate类  
+** 作者 : Li Tianqi
+** 创建 : 2020-11-17 / 19:14
+** 版权 : 201911020121@stu.sdnu.edu.cn
+/**************************************************/
+
+#include <iostream>
+#include <cstdlib>
+#include <windows.h>
+#include <string>
+
+using namespace std;
+
+/*----------------------------------*
+         Class Definition
+*-----------------------------------*/
+class Graduate
+{
+private:string name;
+		bool sex;
+		int id;
+		float goal;
+		string research;
+		string teacherName;
+		const string university = "山东师范大学";
+		double graduategoal[20];
+public:
+	friend void grade(Graduate&);
+	Graduate()
+	{
+		cout << "请输入该研究生的姓名:";
+		cin >> name;
+		cout << "请输入该研究生的性别:";
+		cin >> sex;
+	}
+	string sex1()
+	{
+		if (sex == 1)
+			return "男";
+		else if (sex == 0)
+			return "女";
+	}
+	Graduate(int id,float goal)
+	{
+		this->id = id;
+		this->goal = goal;
+		cout << "学号:" << id << endl;
+		cout << "入学成绩:" << goal << endl;
+	}
+	Graduate(string research, string teacherName)
+	{
+		cout << "研究领域:" << research << endl;
+		cout << "指导老师:" << teacherName << endl;
+	}
+	Graduate(const Graduate &r)
+	{
+		this->research = r.research;
+		this->teacherName = r.teacherName;
+	}
+	~Graduate() 
+	{
+	}
+	void output(string s)
+	{
+		cout << endl;
+		cout << "*******研究生信息*******" << endl;
+		cout << "姓名:" << name << endl;
+		cout << "性别:" << s << endl;
+	}
+	 void output1() const
+	{
+		cout << "学校名称:" << university << endl;
+		cout << "************************" << endl;
+	}
+	 void manygraduate()//输出多个研究生对象的平均成绩
+	 {
+		 double allgoal = 0;
+		 graduategoal[0] = 84.7;
+		 graduategoal[1] = 93.3;
+		 graduategoal[2] = 77.6;
+		 graduategoal[3] = 65.5;
+		 graduategoal[4] = 50.4;
+		 for (int i = 0; i <= 4; i++)
+			 allgoal = allgoal + graduategoal[i];
+		 double averagegoal = allgoal / 5;
+		 cout << endl << endl << "多个研究生的平均成绩是:" << averagegoal << endl << endl;
+	 }
+};
+
+void grade(Graduate& gra)
+{
+	for (int i=0;i<=4;i++)
+	{
+		if (gra.graduategoal[i] >= 90)
+			cout << "第" << i + 1 << "个同学的成绩为" << gra.graduategoal[i] << ",等级为A" << endl;
+		else if (80 <= gra.graduategoal[i] && gra.graduategoal[i] < 89)
+			cout << "第" << i + 1 << "个同学的成绩为" << gra.graduategoal[i] << ",等级为B" << endl;
+		else if (70 <= gra.graduategoal[i] && gra.graduategoal[i] < 79)
+			cout << "第" << i + 1 << "个同学的成绩为" << gra.graduategoal[i] << ",等级为C" << endl;
+		else if (60 <= gra.graduategoal[i] && gra.graduategoal[i] < 69)
+			cout << "第" << i + 1 << "个同学的成绩为" << gra.graduategoal[i] << ",等级为D" << endl;
+		else if (gra.graduategoal[i] < 60)
+			cout << "第" << i + 1 << "个同学的成绩为" << gra.graduategoal[i] << ",等级为E" << endl;
+	}
+}
+
+/*----------------------------------*
+          Main Function
+*-----------------------------------*/
+
+int main()
+{
+	string graduate[20];//在主函数内定义研究生对象数组
+	Graduate a;
+	a.sex1();
+	a.output(a.sex1());
+	Graduate c("人工智能", "张老师");
+	Graduate b(21, 89.9);
+	Graduate d(c);
+	d.output1();
+	a.manygraduate();
+	grade(a);
+	system("pause");
+	return 0;
+}
